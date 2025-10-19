@@ -114,7 +114,7 @@ export default function Landing() {
             AI Workpapers
           </h1>
           <p className="mt-4 text-lg text-neutral-300">
-            Built for real accounting workflows — your expertise, amplified by AI.
+            Built for accountants.
           </p>
         </div>
       </Section>
