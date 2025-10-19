@@ -79,6 +79,7 @@ export default function Landing() {
               height={40}
               className="h-9 w-9 rounded-xl"
               priority
+              unoptimized
             />
             <span className="text-base font-semibold text-neutral-100">WorkPapers.ai</span>
           </div>
