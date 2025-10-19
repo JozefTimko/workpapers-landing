@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useMemo, useState } from "react";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -67,9 +68,11 @@ export default function WaitlistForm() {
 
       setStatus("success");
       setForm({ name: "", position: "", company: "", email: "", phone: "" });
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus("error");
-      setError(err?.message || "Something went wrong. Please try again.");
+      const message =
+        err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setError(message);
     }
   }
 

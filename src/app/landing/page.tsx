@@ -1,10 +1,8 @@
-"use client";
-
+// src/app/landing/page.tsx
 import Image from "next/image";
 import WaitlistForm from "./WaitlistForm";
-import Video from "./video";
 import Footer from "./parts/Footer";
-import { useState } from "react";
+import Video from "./video"; // ← direct import, no dynamic()
 
 function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`mx-auto w-full max-w-6xl px-5 ${className}`}>{children}</div>;
@@ -19,9 +17,9 @@ function Section({
   id?: string;
   className?: string;
 }) {
-  // scroll-mt-* prevents the sticky header from covering the anchor target
   return (
-    <section id={id} className={`py-12 sm:py-16 scroll-mt-24 ${className}`}>
+    // align anchor jumps with the fixed header height
+    <section id={id} className={`py-12 sm:py-16 scroll-mt-14 ${className}`}>
       <Container>{children}</Container>
     </section>
   );
@@ -66,118 +64,48 @@ function PromoImage({
 }
 
 export default function Landing() {
-  const features = [
-    {
-      key: "save-time",
-      title: "Save Hours Per Job",
-      summary:
-        "Automate trial balance imports, schedules, and workpapers — finish in minutes instead of hours.",
-      details: (
-        <div className="space-y-3">
-          <p>Plug in your data once. WorkPapers builds the workpaper pack for you.</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Connect Xero / QuickBooks and select the year or period.</li>
-            <li>Auto-generate lead schedules and movement analysis.</li>
-            <li>Export to Excel with tabs for TB, nominals, and support.</li>
-          </ul>
-        </div>
-      ),
-    },
-    {
-      key: "error-free",
-      title: "Error-Free Workpapers",
-      summary: "Reduce manual input and avoid formula mistakes with AI-verified consistency.",
-      details: (
-        <div className="space-y-3">
-          <p>Your mapping and totals stay aligned across every sheet.</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Automated cross-checks between TB, journals, and schedules.</li>
-            <li>Flags unusual balances and missing mappings.</li>
-            <li>Audit trail for every override you apply.</li>
-          </ul>
-        </div>
-      ),
-    },
-    {
-      key: "partner-ready",
-      title: "Partner-Ready Output",
-      summary:
-        "Generate clean, standardised Excel workpapers your reviewers will actually enjoy checking.",
-      details: (
-        <div className="space-y-3">
-          <p>Consistent formatting and clear sign-posting speeds up review.</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Neat nominal tabs with subtotals and links back to the TB.</li>
-            <li>Inline narratives and supporting notes where they matter.</li>
-            <li>One-click export designed for partner sign-off.</li>
-          </ul>
-        </div>
-      ),
-    },
-    {
-      key: "fewer-points",
-      title: "Fewer Review Points",
-      summary:
-        "Get clear variance notes and supporting schedules that anticipate partner queries.",
-      details: (
-        <div className="space-y-3">
-          <p>Proactive commentary reduces back-and-forth.</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Year-on-year movement explanations pulled from the data.</li>
-            <li>Bank extractions classified with “Needs Review” flags.</li>
-            <li>Change log shows exactly what was adjusted and why.</li>
-          </ul>
-        </div>
-      ),
-    },
-  ];
-
-  const [active, setActive] = useState<string | null>(features[0].key);
-
   return (
-    // scroll behavior for anchor links
-    <main className="min-h-screen bg-neutral-950 text-neutral-100 [scroll-behavior:smooth]">
-      {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4">
-        <div className="flex items-center space-x-3">
-          <Image
-            src="/logo.png"
-            alt="WorkPapers logo"
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-xl"
-            priority
-          />
-          <span className="text-lg font-semibold text-neutral-100">WorkPapers.ai</span>
-        </div>
-      </header>
+    // add top padding = header height so content doesn't sit under it
+    <main className="min-h-screen bg-neutral-950 text-neutral-100 [scroll-behavior:smooth] pt-14">
+      {/* ✅ Combined fixed header (logo/title + pills on the same line) */}
+      <header className="fixed inset-x-0 top-0 z-50 h-14 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60">
+        <Container className="flex h-full items-center justify-between">
+          {/* Left: logo + name */}
+          <div className="flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt="WorkPapers logo"
+              width={40}
+              height={40}
+              className="h-9 w-9 rounded-xl"
+              priority
+            />
+            <span className="text-base font-semibold text-neutral-100">WorkPapers.ai</span>
+          </div>
 
-      {/* Sticky in-page nav */}
-      <nav
-        aria-label="Section navigation"
-        className="sticky top-0 z-40 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60"
-      >
-        <Container className="flex flex-wrap items-center gap-2 py-3">
-          <a
-            href="#description"
-            className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
-          >
-            Overview
-          </a>
-          <a
-            href="#demos"
-            className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
-          >
-            Demo
-          </a>
-          <a
-            href="#waitlist"
-            className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
-          >
-            Contact / Waitlist
-          </a>
+          {/* Right: pills */}
+          <nav aria-label="Section navigation" className="flex items-center gap-2">
+            <a
+              href="#description"
+              className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
+            >
+              Overview
+            </a>
+            <a
+              href="#demos"
+              className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
+            >
+              Demo
+            </a>
+            <a
+              href="#waitlist"
+              className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
+            >
+              Contact / Waitlist
+            </a>
+          </nav>
         </Container>
-      </nav>
+      </header>
 
       {/* Hero */}
       <Section id="hero" className="pt-8">
@@ -191,9 +119,7 @@ export default function Landing() {
         </div>
       </Section>
 
-      {/* =========================
-          Promo Section (Description)
-         ========================= */}
+      {/* Promo Section */}
       <Section id="description" className="pt-0">
         <div className="rounded-3xl border border-neutral-800 bg-neutral-900 px-4 py-12 sm:px-8 sm:py-16 text-neutral-100">
           <div className="mx-auto max-w-3xl text-center">
@@ -206,7 +132,7 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Row 1 — LEFT (image left, text right) */}
+          {/* Row 1 */}
           <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
             <PromoImage
               src="/screenshots/Screenshot3.png"
@@ -228,7 +154,7 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* Row 2 — RIGHT (text left, image right) */}
+          {/* Row 2 */}
           <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
             <div className="order-2 lg:order-1 lg:col-span-3">
               <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
@@ -249,7 +175,7 @@ export default function Landing() {
             />
           </div>
 
-          {/* Row 3 — LEFT (image left, text right) */}
+          {/* Row 3 */}
           <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
             <PromoImage
               src="/screenshots/Screenshot5.png"
@@ -280,7 +206,6 @@ export default function Landing() {
         </p>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {/* LEFT: Xero → Workpapers */}
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-3 shadow-sm">
             <div className="aspect-video overflow-hidden rounded-xl border border-neutral-800">
               <Video videoId="tXd4h9Su0mE" title="Xero → Workpapers" />
@@ -290,7 +215,6 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* RIGHT: Bank statement → Excel */}
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-3 shadow-sm">
             <div className="aspect-video overflow-hidden rounded-xl border border-neutral-800">
               <Video videoId="CGcSjqXgvR8" title="Bank statement → Excel cashbook" />
@@ -302,14 +226,16 @@ export default function Landing() {
         </div>
       </Section>
 
-      {/* CTA band */}
+      {/* CTA */}
       <Section id="waitlist" className="py-0">
         <div className="rounded-3xl bg-neutral-900 border border-neutral-800 p-6 sm:p-8">
           <div className="grid items-center gap-6 sm:grid-cols-2">
             <div>
-              <h3 className="text-xl font-semibold text-neutral-50">Be first to try WorkPapers</h3>
+              <h3 className="text-xl font-semibold text-neutral-50">
+                Be first to automate your workpapers.
+              </h3>
               <p className="mt-1 text-neutral-300">
-                Join the waitlist and we’ll notify you when early access opens.
+                Join the waitlist — we’ll reach out as soon as early access opens.
               </p>
             </div>
             <div className="rounded-2xl bg-white/5 p-3 sm:p-4">
