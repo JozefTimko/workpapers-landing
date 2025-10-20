@@ -4,7 +4,6 @@ import WaitlistForm from "./WaitlistForm";
 import Footer from "./parts/Footer";
 import Video from "./video";
 
-
 function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`mx-auto w-full max-w-6xl px-5 ${className}`}>{children}</div>;
 }
@@ -68,19 +67,11 @@ export default function Landing() {
   return (
     // add top padding = header height so content doesn't sit under it
     <main className="min-h-screen bg-neutral-950 text-neutral-100 [scroll-behavior:smooth] pt-14">
-      {/* ✅ Combined fixed header (logo/title + pills on the same line) */}
+      {/* Fixed header without logo image */}
       <header className="fixed inset-x-0 top-0 z-50 h-14 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60">
         <Container className="flex h-full items-center justify-between">
-          {/* Left: logo + name */}
-          <div className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="WorkPapers logo"
-              width={40}
-              height={40}
-              className="h-9 w-9 rounded-xl"
-              priority
-            />
+          {/* Left: name only */}
+          <div className="flex items-center">
             <span className="text-base font-semibold text-neutral-100">WorkPapers.ai</span>
           </div>
 
@@ -114,9 +105,7 @@ export default function Landing() {
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-semibold tracking-tight text-neutral-50">
             AI Workpapers
           </h1>
-          <p className="mt-4 text-lg text-neutral-300">
-            Built for accountants.
-          </p>
+          <p className="mt-4 text-lg text-neutral-300">Built for accountants.</p>
         </div>
       </Section>
 
@@ -128,8 +117,7 @@ export default function Landing() {
               Automate your accounts preparation workpapers in seconds.
             </h2>
             <p className="mt-3 text-neutral-300">
-              Workpapers that build themselves — accurate,
-              consistent and ready for review.
+              Workpapers that build themselves — accurate, consistent and ready for review.
             </p>
           </div>
 
