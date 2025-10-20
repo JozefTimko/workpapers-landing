@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react"; // ✅ Add this line
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.className} font-sans bg-neutral-950 text-neutral-100 antialiased`}>
         {children}
+        <Analytics /> {/* ✅ Added here so page views are tracked */}
       </body>
     </html>
   );
