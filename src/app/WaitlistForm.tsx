@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -33,7 +33,7 @@ export default function WaitlistForm() {
   const isValid = useMemo(() => {
     if (!allFilled) return false;
     if (!isEmail(form.email)) return false;
-    if (phoneDigits(form.phone).length < 7) return false; // minimal sanity check
+    if (phoneDigits(form.phone).length < 7) return false;
     return true;
   }, [form, allFilled]);
 
@@ -45,6 +45,7 @@ export default function WaitlistForm() {
       setError("Form endpoint not configured.");
       return;
     }
+
     if (!isValid) {
       setError("Please complete all fields with valid details.");
       return;
@@ -52,18 +53,26 @@ export default function WaitlistForm() {
 
     try {
       setStatus("submitting");
-      const resp = await fetch(endpoint, {
+
+      // Use FormData instead of JSON
+      const fd = new FormData();
+      fd.append("name", form.name);
+      fd.append("position", form.position);
+      fd.append("company", form.company);
+      fd.append("email", form.email); // Formspree looks for this key
+      fd.append("phone", form.phone);
+      fd.append("_subject", "WorkPapers.ai Waitlist");
+      fd.append("source", "workpapers-landing");
+
+      const res = await fetch(endpoint, {
         method: "POST",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          source: "workpapers-landing",
-        }),
+        body: fd,
+        headers: { Accept: "application/json" }, // Do NOT set Content-Type manually
       });
 
-      if (!resp.ok) {
-        const j = await resp.json().catch(() => ({}));
-        throw new Error(j?.error || `HTTP ${resp.status}`);
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j?.error || `HTTP ${res.status}`);
       }
 
       setStatus("success");
@@ -82,7 +91,7 @@ export default function WaitlistForm() {
 
       {status === "success" ? (
         <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
-          Thanks! You’re on the list. We’ll be in touch soon.
+          Thanks! We’ll be in touch soon.
         </div>
       ) : (
         <form onSubmit={onSubmit} className="mt-4 space-y-3" noValidate>
