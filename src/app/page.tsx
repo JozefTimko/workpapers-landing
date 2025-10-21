@@ -105,8 +105,8 @@ export default function Landing() {
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-semibold tracking-tight text-neutral-50">
             AI Workpapers
           </h1>
-          <p className="mt-4 text-lg text-neutral-300">Built for accountants.</p>
         </div>
+        <p className="mt-4 text-lg text-neutral-300 text-center">Built for accountants.</p>
       </Section>
 
       {/* Promo Section */}
@@ -121,13 +121,54 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Row 1 */}
+          {/* Row 1 — (was Row 2) — IMAGE LEFT / TEXT RIGHT */}
+          <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
+            <PromoImage
+              src="/screenshots/Screenshot4.png"
+              alt="Cashbook Excel sheet auto-categorised from bank statement"
+              className="lg:col-span-9"
+              priority
+            />
+            <div className="lg:col-span-3">
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" className="text-neutral-200 fill-current">
+                  <path d="M2.5 12.5l18-9-4.5 16.5-5-5-8.5-2.5zM11 14l3.5 3.5" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-semibold text-neutral-50">Turn bank statements into clean workpapers in seconds</h3>
+              <p className="mt-2 text-neutral-300">
+                Each transaction intelligently grouped into income and expense categories. Get a
+                ready made cashbook analysis in seconds.
+              </p>
+            </div>
+          </div>
+
+          {/* Row 2 — (was Row 3) — TEXT LEFT / IMAGE RIGHT */}
+          <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-3">
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" className="text-neutral-200 fill-current">
+                  <path d="M7 2h7l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V7h3.5" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-semibold text-neutral-50">Effortless Workpaper Generation from Xero/QuickBooks</h3>
+              <p className="mt-2 text-neutral-300">
+                Skip the manual work and instantly generate complete, auto-completed workpapers from Xero or QuickBooks. AI automatically handles the creation of schedules, reconciliation, totals, and variance analysis - all ready for review.             
+                </p>
+            </div>
+            <PromoImage
+              src="/screenshots/Screenshot5.png"
+              alt="Fixed asset schedule reconciled to trial balance"
+              className="lg:col-span-9"
+            />
+          </div>
+
+          {/* Row 3 — (was Row 1) — IMAGE LEFT / TEXT RIGHT */}
           <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
             <PromoImage
               src="/screenshots/Screenshot3.png"
               alt="Movement analysis with narrative comments"
               className="lg:col-span-9"
-              priority
             />
             <div className="lg:col-span-3">
               <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
@@ -142,75 +183,30 @@ export default function Landing() {
               </p>
             </div>
           </div>
-
-          {/* Row 2 */}
-          <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
-            <div className="order-2 lg:order-1 lg:col-span-3">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" className="text-neutral-200 fill-current">
-                  <path d="M2.5 12.5l18-9-4.5 16.5-5-5-8.5-2.5zM11 14l3.5 3.5" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-neutral-50">Turn bank statements into clean workpapers</h3>
-              <p className="mt-2 text-neutral-300">
-                Each transaction intelligently grouped into income and expense categories. Get a
-                ready made cashbook analysis in seconds.
-              </p>
-            </div>
-            <PromoImage
-              src="/screenshots/Screenshot4.png"
-              alt="Cashbook Excel sheet auto-categorised from bank statement"
-              className="order-1 lg:order-2 lg:col-span-9"
-            />
-          </div>
-
-          {/* Row 3 */}
-          <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
-            <PromoImage
-              src="/screenshots/Screenshot5.png"
-              alt="Fixed asset schedule reconciled to trial balance"
-              className="lg:col-span-9"
-            />
-            <div className="lg:col-span-3">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" className="text-neutral-200 fill-current">
-                  <path d="M7 2h7l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V7h3.5" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-neutral-50">AI generated schedules, ready for review</h3>
-              <p className="mt-2 text-neutral-300">
-                Automatically builds schedules from your accounting data. Each sheet reconciles to the
-                TB, with movements and totals calculated for you.
-              </p>
-            </div>
-          </div>
         </div>
       </Section>
 
       {/* Demos */}
       <Section id="demos" className="pt-0">
         <h2 className="text-2xl font-semibold tracking-tight text-neutral-50 text-center">See it in action</h2>
-        <p className="mt-2 text-center text-neutral-300">
-          Two short demos: Xero → workpapers and bank statement extraction.
-        </p>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-3 shadow-sm">
+            <p className="text-center text-neutral-300 mb-3">
+              Starting from Xero, instantly generate full workpapers with the necessary schedules and narratives.
+            </p>
             <div className="aspect-video overflow-hidden rounded-xl border border-neutral-800">
               <Video videoId="tXd4h9Su0mE" title="Xero → Workpapers" />
             </div>
-            <p className="mt-2 text-center text-xs text-neutral-400">
-              Connect Xero and generate year end workpapers with suggested narratives.
-            </p>
           </div>
 
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-3 shadow-sm">
+            <p className="text-center text-neutral-300 mb-3">
+              Start with a bank statement and automatically turn it into categorized workpapers for review.
+            </p>
             <div className="aspect-video overflow-hidden rounded-xl border border-neutral-800">
               <Video videoId="CGcSjqXgvR8" title="Bank statement → Excel cashbook" />
             </div>
-            <p className="mt-2 text-center text-xs text-neutral-400">
-              Bank statement (PDF) converted into an Excel cashbook with allocations and review flags.
-            </p>
           </div>
         </div>
       </Section>
