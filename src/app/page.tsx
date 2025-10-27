@@ -1,9 +1,12 @@
-// src/app/page.tsx
+"use client";
+
 import Image from "next/image";
 import WaitlistForm from "./WaitlistForm";
-import Footer from "./parts/Footer";
 import Video from "./video";
+// You can remove these if unused, they won’t break the build:
+import { useEffect, useRef, useState } from "react";
 
+/* ---------- Layout helpers ---------- */
 function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`mx-auto w-full max-w-6xl px-5 ${className}`}>{children}</div>;
 }
@@ -18,14 +21,13 @@ function Section({
   className?: string;
 }) {
   return (
-    // align anchor jumps with the fixed header height
     <section id={id} className={`py-12 sm:py-16 scroll-mt-14 ${className}`}>
       <Container>{children}</Container>
     </section>
   );
 }
 
-/** XL image card that shows screenshots in their original aspect (no crop/trim) */
+/** XL image card helper */
 function PromoImage({
   src,
   alt,
@@ -63,25 +65,53 @@ function PromoImage({
   );
 }
 
+/* ---------- Problem → Solution (updated, box removed) ---------- */
+function ProblemSolution() {
+  return (
+    <Section id="problem-solution" className="pt-0">
+      <div className="rounded-3xl border border-neutral-800 bg-neutral-900 px-5 py-10 sm:px-8 sm:py-14">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-neutral-50">
+            Waste hours building workpapers?
+          </h2>
+          <p className="mt-3 text-neutral-300">
+            Let AI handle the repetitive aspects so you can review, not build.
+          </p>
+        </div>
+
+        {/* Solution content (no box) */}
+        <div className="mx-auto mt-8 max-w-4xl text-left sm:text-center">
+          <h3 className="text-lg font-semibold text-neutral-50">
+            AI generated workpapers, ready for review
+          </h3>
+          <ul className="mt-3 space-y-2 text-neutral-300">
+            <li>• AI builds complete Excel workpapers automatically</li>
+            <li>• Designed for faster, cleaner year end files</li>
+            <li>• Outputs clean Excel workpapers ready for review</li>
+            <li>• Variances and movements verified automatically</li>
+          </ul>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ---------- Page ---------- */
 export default function Landing() {
   return (
-    // add top padding = header height so content doesn't sit under it
     <main className="min-h-screen bg-neutral-950 text-neutral-100 [scroll-behavior:smooth] pt-14">
-      {/* Fixed header without logo image */}
+      {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50 h-14 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60">
         <Container className="flex h-full items-center justify-between">
-          {/* Left: name only */}
           <div className="flex items-center">
             <span className="text-base font-semibold text-neutral-100">WorkPapers.ai</span>
           </div>
-
-          {/* Right: pills */}
           <nav aria-label="Section navigation" className="flex items-center gap-2">
             <a
-              href="#description"
+              href="#how-it-works"
               className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
             >
-              Overview
+              How it works
             </a>
             <a
               href="#demos"
@@ -93,7 +123,7 @@ export default function Landing() {
               href="#waitlist"
               className="rounded-full border border-neutral-800 px-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-900"
             >
-              Contact / Waitlist
+              Join Waitlist
             </a>
           </nav>
         </Container>
@@ -105,107 +135,128 @@ export default function Landing() {
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-semibold tracking-tight text-neutral-50">
             AI Workpapers
           </h1>
+          <p className="mt-4 text-lg sm:text-xl text-neutral-300">Built for accountants.</p>
         </div>
-        <p className="mt-4 text-lg text-neutral-300 text-center">Built for accountants.</p>
+
+        {/* CTA */}
+        <div className="mt-8 flex justify-center">
+          <a
+            href="#waitlist"
+            className="rounded-full bg-sky-600 hover:bg-sky-500 px-6 py-3 text-base font-medium text-white shadow transition-colors duration-200"
+          >
+            Join the Waitlist
+          </a>
+        </div>
       </Section>
 
-      {/* Promo Section */}
-      <Section id="description" className="pt-0">
-        <div className="rounded-3xl border border-neutral-800 bg-neutral-900 px-4 py-12 sm:px-8 sm:py-16 text-neutral-100">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-neutral-50">
-              Automate your accounts preparation workpapers in seconds.
-            </h2>
-            <p className="mt-3 text-neutral-300">
-              Workpapers that build themselves — accurate, consistent and ready for review.
+      {/* How it Works */}
+      <section id="how-it-works" className="py-16 bg-neutral-950">
+        <div className="mx-auto text-center mb-20 px-6">
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-neutral-50">
+            How it works
+          </h2>
+        </div>
+
+        {/* Xero → Workpapers */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-20 mb-32 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-6 lg:px-16">
+          {/* Text */}
+          <div className="max-w-2xl space-y-5">
+            <h3 className="text-3xl sm:text-4xl font-semibold text-neutral-50 leading-snug">
+              From Xero to workpapers in seconds
+            </h3>
+            <p className="text-neutral-300 text-base sm:text-lg leading-relaxed">
+              Connect to Xero, upload your prior year workpaper and let AI do the rest. In moments,
+              receive automatically generated workpapers ready for review.
             </p>
+            <ul className="list-disc list-inside text-neutral-400 space-y-2 text-base sm:text-lg">
+              <li>Build full workpapers in seconds</li>
+              <li>Automatically prepared schedules</li>
+              <li>Workpapers structured for review</li>
+            </ul>
           </div>
 
-          {/* Row 1 — (was Row 2) — IMAGE LEFT / TEXT RIGHT */}
-          <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
-            <PromoImage
-              src="/screenshots/Screenshot4.png"
-              alt="Cashbook Excel sheet auto-categorised from bank statement"
-              className="lg:col-span-9"
-              priority
-            />
-            <div className="lg:col-span-3">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" className="text-neutral-200 fill-current">
-                  <path d="M2.5 12.5l18-9-4.5 16.5-5-5-8.5-2.5zM11 14l3.5 3.5" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-neutral-50">Turn bank statements into clean workpapers in seconds</h3>
-              <p className="mt-2 text-neutral-300">
-                Each transaction intelligently grouped into income and expense categories. Get a
-                ready made cashbook analysis in seconds.
-              </p>
-            </div>
-          </div>
-
-          {/* Row 2 — (was Row 3) — TEXT LEFT / IMAGE RIGHT */}
-          <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-3">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" className="text-neutral-200 fill-current">
-                  <path d="M7 2h7l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V7h3.5" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-neutral-50">Effortless Workpaper Generation from Xero/QuickBooks</h3>
-              <p className="mt-2 text-neutral-300">
-                Skip the manual work and instantly generate complete, auto-completed workpapers from Xero or QuickBooks. AI automatically handles the creation of schedules, reconciliation, totals, and variance analysis - all ready for review.             
-                </p>
-            </div>
-            <PromoImage
-              src="/screenshots/Screenshot5.png"
-              alt="Fixed asset schedule reconciled to trial balance"
-              className="lg:col-span-9"
-            />
-          </div>
-
-          {/* Row 3 — (was Row 1) — IMAGE LEFT / TEXT RIGHT */}
-          <div className="mx-auto mt-12 grid max-w-[1600px] items-center gap-12 lg:grid-cols-12">
-            <PromoImage
-              src="/screenshots/Screenshot3.png"
-              alt="Movement analysis with narrative comments"
-              className="lg:col-span-9"
-            />
-            <div className="lg:col-span-3">
-              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 shadow ring-1 ring-neutral-800">
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" className="text-neutral-200 fill-current">
-                  <path d="M12 2l1.8 4.6L18 8l-4.2 1.4L12 14l-1.8-4.6L6 8l4.2-1.4L12 2zM5 16l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2zm13-2l1.2 2.4L22 17l-2.8.6L18 20l-1.2-2.4L14 17l2.8-.6L18 14z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-neutral-50">Work smarter from the very first click</h3>
-              <p className="mt-2 text-neutral-300">
-                Choose your workflow — Xero, QuickBooks, or bank statements and let the AI generate
-                structured workpapers instantly, ready for review in minutes.
-              </p>
+          {/* GIF */}
+          <div className="flex-1 w-full">
+            <div className="relative w-full overflow-hidden rounded-3xl border border-neutral-800 shadow-2xl">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="w-full h-auto object-contain bg-black rounded-3xl"
+                style={{ maxHeight: "1000px" }}
+              >
+                <source src="/videos/tinyvid_optimized_xerogif.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </div>
-      </Section>
 
-      {/* Demos */}
+        {/* Bank Statement → Workpapers */}
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-20 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-6 lg:px-16">
+          {/* GIF */}
+          <div className="flex-1 w-full">
+            <div className="relative w-full overflow-hidden rounded-3xl border border-neutral-800 shadow-2xl">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="w-full h-auto object-contain bg-black rounded-3xl"
+                style={{ maxHeight: "1000px" }}
+              >
+                <source src="/videos/tinyvid_optimized_bsgif.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          {/* Text */}
+          <div className="max-w-2xl space-y-5">
+            <h3 className="text-3xl sm:text-4xl font-semibold text-neutral-50 leading-snug">
+              From bank statements to workpapers
+            </h3>
+            <p className="text-neutral-300 text-base sm:text-lg leading-relaxed">
+              Upload a bank statement and automatically convert it into a structured Excel cashbook
+              analysis. Transactions are categorised automatically, giving you a ready-made schedule.
+            </p>
+            <ul className="list-disc list-inside text-neutral-400 space-y-2 text-base sm:text-lg">
+              <li>Turn bank statements into workpapers</li>
+              <li>Automatically categorised transactions</li>
+              <li>Workpapers prepared for review</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Problem → Solution */}
+      <ProblemSolution />
+
+      {/* See it in action */}
       <Section id="demos" className="pt-0">
-        <h2 className="text-2xl font-semibold tracking-tight text-neutral-50 text-center">See it in action</h2>
+        <h2 className="text-2xl font-semibold tracking-tight text-neutral-50 text-center">
+          See it in action
+        </h2>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-3 shadow-sm">
             <p className="text-center text-neutral-300 mb-3">
-              Starting from Xero, instantly generate full workpapers with the necessary schedules and narratives.
+              Starting from Xero, instantly generate full workpapers with the necessary schedules and
+              narratives.
             </p>
             <div className="aspect-video overflow-hidden rounded-xl border border-neutral-800">
-              <Video videoId="tXd4h9Su0mE" title="Xero → Workpapers" />
+              <Video videoId="vgAd_M-C-yE" title="Xero → Workpapers" />
             </div>
           </div>
 
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-3 shadow-sm">
             <p className="text-center text-neutral-300 mb-3">
-              Start with a bank statement and automatically turn it into categorized workpapers for review.
+              Start with a bank statement and automatically turn it into categorised workpapers for
+              review.
             </p>
             <div className="aspect-video overflow-hidden rounded-xl border border-neutral-800">
-              <Video videoId="CGcSjqXgvR8" title="Bank statement → Excel cashbook" />
+              <Video videoId="2rdn8WgZcB4" title="Bank statement → Excel cashbook" />
             </div>
           </div>
         </div>
@@ -222,6 +273,9 @@ export default function Landing() {
               <p className="mt-1 text-neutral-300">
                 Join the waitlist — we’ll reach out as soon as early access opens.
               </p>
+              <p className="mt-3 text-sm font-medium text-sky-400">
+                Join before the waitlist closes.
+              </p>
             </div>
             <div className="rounded-2xl bg-white/5 p-3 sm:p-4">
               <WaitlistForm />
@@ -229,8 +283,6 @@ export default function Landing() {
           </div>
         </div>
       </Section>
-
-      <Footer />
     </main>
   );
 }
