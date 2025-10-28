@@ -1,5 +1,9 @@
-import { redirect } from "next/navigation";
+"use client";
+import { useEffect } from "react";
 
-export async function GET() {
-  redirect("https://www.workpapersai.com/?v=earlyaccess");
+export default function EarlyAccessRedirect() {
+  useEffect(() => {
+    window.location.replace("/?v=earlyaccess");
+  }, []);
+  return null;
 }

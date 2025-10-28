@@ -1,5 +1,9 @@
-import { redirect } from "next/navigation";
+"use client";
+import { useEffect } from "react";
 
-export async function GET() {
-  redirect("https://www.workpapersai.com/?v=demo");
+export default function DemoRedirect() {
+  useEffect(() => {
+    window.location.replace("/?v=demo");
+  }, []);
+  return null;
 }
