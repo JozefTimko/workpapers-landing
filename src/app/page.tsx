@@ -3,6 +3,7 @@
 import Image from "next/image";
 import WaitlistForm from "./WaitlistForm";
 import Video from "./video";
+import Footer from "./parts/Footer";
 // You can remove these if unused, they won’t break the build:
 import { useEffect, useRef, useState } from "react";
 
@@ -139,14 +140,34 @@ export default function Landing() {
         </div>
 
         {/* CTA */}
-        <div className="mt-8 flex justify-center">
-          <a
-            href="#waitlist"
-            className="rounded-full bg-sky-600 hover:bg-sky-500 px-6 py-3 text-base font-medium text-white shadow transition-colors duration-200"
-          >
-            Join the Waitlist
-          </a>
+        <div className="mt-8 flex flex-col items-center justify-center space-y-2">
+        <a
+          href="#waitlist"
+          className="rounded-full bg-sky-600 hover:bg-sky-500 px-6 py-3 text-base font-medium text-white shadow transition-colors duration-200"
+        >
+          Join the Waitlist
+        </a>
+        <p className="text-sm font-medium text-amber-400 animate-pulse-soft">
+          Last remaining spots
+        </p>
         </div>
+
+        <style jsx>{`
+          @keyframes pulse-soft {
+            0% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.6;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+          .animate-pulse-soft {
+            animation: pulse-soft 2.5s ease-in-out infinite;
+          }
+        `}</style>
       </Section>
 
       {/* How it Works */}
@@ -271,10 +292,10 @@ export default function Landing() {
                 Be first to automate your workpapers.
               </h3>
               <p className="mt-1 text-neutral-300">
-                Join the waitlist — we’ll reach out as soon as early access opens.
+                Join the waitlist. We’ll reach out as soon as early access opens.
               </p>
-              <p className="mt-3 text-sm font-medium text-sky-400">
-                Join before the waitlist closes.
+              <p className="mt-3 text-sm font-semibold text-sky-400">
+                Last remaining spots. Secure yours today.
               </p>
             </div>
             <div className="rounded-2xl bg-white/5 p-3 sm:p-4">
@@ -283,6 +304,9 @@ export default function Landing() {
           </div>
         </div>
       </Section>
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

@@ -42,7 +42,7 @@ export default function PrivacyPage() {
         <p>
           You may request access to, correction of, or deletion of your personal
           data at any time. To make a request, contact us at{" "}
-          <a href="mailto:jozef@workpapersai.com">jozef@workpapersai.com</a>.
+          <a href="mailto:jozef@workpapersai.com">jozef@workpapersai.com</a>
         </p>
 
         <h2>Contact</h2>
