@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -23,6 +23,19 @@ export default function WaitlistForm() {
   });
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+
+  // NEW: capture the version from URL (?v=waitlist|demo|earlyaccess)
+  const [version, setVersion] = useState<string>("unknown");
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const v = (params.get("v") || "").toLowerCase();
+      const allowed = new Set(["waitlist", "demo", "earlyaccess"]);
+      setVersion(allowed.has(v) ? v : "unknown");
+    } catch {
+      setVersion("unknown");
+    }
+  }, []);
 
   const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
 
@@ -63,6 +76,9 @@ export default function WaitlistForm() {
       fd.append("phone", form.phone);
       fd.append("_subject", "WorkPapers.ai Waitlist");
       fd.append("source", "workpapers-landing");
+
+      // NEW: include the captured version so you can attribute sign-ups
+      fd.append("version", version); // will be "waitlist" | "demo" | "earlyaccess" | "unknown"
 
       const res = await fetch(endpoint, {
         method: "POST",
