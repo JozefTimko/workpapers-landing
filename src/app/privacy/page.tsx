@@ -30,6 +30,23 @@ export default function PrivacyPage() {
           with third parties for marketing purposes.
         </p>
 
+        <h2>Analytics & Cookies (Microsoft Clarity)</h2>
+        <p>
+          We use Microsoft Clarity to help us understand how visitors use this
+          site so we can improve the experience. Clarity uses cookies and
+          similar technologies to provide anonymised session replays and
+          heatmaps (e.g., where users scroll and click). Clarity does not
+          collect sensitive personal data or record keystrokes on forms. For
+          more information about how Microsoft processes data, see Microsoft’s
+          privacy documentation.
+        </p>
+        <p>
+          You can control cookies via your browser settings. If you prefer not
+          to be tracked for analytics, you may also use your browser’s
+          “Do Not Track” feature or block third-party cookies. The site remains
+          usable if analytics cookies are disabled.
+        </p>
+
         <h2>Service providers</h2>
         <p>
           We may use trusted third-party services to help operate this website,
@@ -37,12 +54,15 @@ export default function PrivacyPage() {
           providers are bound by appropriate data protection and security
           commitments.
         </p>
+        <p>
+          We also use Microsoft Clarity for analytics as described above.
+        </p>
 
         <h2>Your rights</h2>
         <p>
           You may request access to, correction of, or deletion of your personal
           data at any time. To make a request, contact us at{" "}
-          <a href="mailto:jozef@workpapersai.com">jozef@workpapersai.com</a>
+          <a href="mailto:jozef@workpapersai.com">jozef@workpapersai.com</a>.
         </p>
 
         <h2>Contact</h2>
